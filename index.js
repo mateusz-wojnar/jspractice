@@ -148,3 +148,235 @@ function swap(a, b) {
 }
 
 console.log(swap(a, b));
+
+
+
+
+
+
+
+
+//CONTROL FLOW
+
+//conditions
+
+var role = "guest";
+
+switch (role) {
+  case "guest":
+    console.log("guest user");
+    break;
+
+  case "admin":
+    console.log("admi user");
+    break;
+
+  default:
+    console.log("unknown user");
+}
+
+role = "guest";
+
+//loops
+
+for (let i = 0; i < 5; i++) {
+  role += 5 * i;
+  console.log(role);
+}
+
+let i = 0;
+while (i <= 5) {
+  if (i % 2 !== 0) {
+    console.log(i);
+  }
+  i++;
+}
+
+//do-while - RUNS ATLEAST ONCE
+i = 9;
+
+do {
+  if (i % 2 !== 0) {
+    console.log(i);
+  }
+  i++;
+} while (i <= 5);
+
+//object /array iterators - FOR IN, FOR OF
+
+const human = {
+  name: "Mati",
+  age: "23",
+};
+
+for (let key in human) {
+  console.log(key, human[key]);
+}
+
+const colors = ["red", "green", "blue"];
+
+//for in is not recommender for arrays since ES6
+for (let index in colors) {
+  console.log(index, colors[index]);
+}
+
+//for of
+
+for (let color of colors) {
+  console.log(color);
+}
+
+//break and continue, (continue not used much)
+
+i = 0;
+while (i <= 10) {
+  if (i === 5) break;
+  if (i % 2 === 0) {
+    i++;
+    continue;
+  }
+  console.log(i);
+  i++;
+}
+
+//exercises
+//max of two numbers
+
+function maxTwo(a, b) {
+  return a >= b ? a : b;
+}
+
+console.log(maxTwo("17", 18));
+
+function isLandscape(width, height) {
+  return width > height;
+}
+
+console.log(isLandscape(100, 100));
+
+//fizzbuzz - divisible by 3,5, 3 and 5
+
+function fizzBuzz(number) {
+  if (number % 3 === 0 && number % 5 === 0) {
+    return "fizzbuzz";
+  } else if (number % 3 === 0) {
+    return "fizz";
+  } else if (number % 5 === 0) {
+    return "buzz";
+  } else if (typeof number !== "number") {
+    return NaN;
+  }
+  return number;
+}
+
+console.log(fizzBuzz(false));
+
+//speed limit
+
+function checkSpeed(speed) {
+  const speedLimit = 70;
+  const speedPenalty = 5;
+  if (speed < speedLimit + speedPenalty) {
+    return "ok";
+  } else {
+    const points = Math.floor((speed - speedLimit) / speedPenalty);
+    if (points >= 12) {
+      return "license suspended";
+    } else {
+      return points;
+    }
+  }
+}
+
+console.log(checkSpeed(125));
+
+//truthy and falsy
+// Falsy - undefined, null, "", false, 0, NaN
+
+const array = [0, null, undefined, "", 2, 3, NaN];
+
+function truthy(array) {
+  let counter = 0;
+  for (let obj of array) {
+    if (obj) counter++;
+  }
+  return counter;
+}
+
+console.log(truthy(array));
+
+//string properties
+
+const movie = {
+  title: "title",
+  releaseYear: 2018,
+  rating: 5.5,
+  director: "kasiok",
+};
+
+showProps(movie);
+
+function showProps(movie) {
+  for (let key in movie) {
+    if (typeof movie[key] == "string") console.log(key, movie[key]);
+  }
+}
+
+//multiples of 3 and 5
+
+function sum(limit) {
+  let sumValue = 0;
+
+  for (let i = 0; i <= limit; i++) {
+    if (i % 3 === 0) {
+      sumValue += i;
+    }
+    if (i % 5 === 0) {
+      sumValue += i;
+    }
+  }
+
+  return sumValue;
+}
+
+console.log(sum(10));
+
+//stars
+
+
+
+function showStars(rowNumber) {
+  for (let row = 1; row <= rowNumber; row++) {
+    let pattern = "";
+    for (let j = 0; j < row; j++) {
+      pattern+="*";
+    }
+    console.log(pattern);
+  }
+}
+
+showStars(5);
+
+
+
+
+
+
+// OBJECTS
+//oop
+
+const circle = {
+  radius: 2,
+  location: {
+    x: 1,
+    y: 1,
+  },
+  isVisible: true,
+  draw: function() {  //METHOD
+    console.log("x+y")
+  }
+}
+
+circle.draw()
+
+// factory functions

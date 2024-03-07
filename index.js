@@ -544,12 +544,309 @@ const date2 = new Date(2018, 0, 11, 9, 0);
 console.log(now.getFullYear);
 console.log(date2);
 
-
-
-
-
-
-
-
-
 // ARRAYS
+
+let arrayNum = [3, 4];
+
+//add at end
+arrayNum.push(5, 6);
+
+//add at beginning
+arrayNum.unshift(1, 2);
+
+//add at end
+arrayNum.splice(2, 0, "a", "b");
+
+//finding elements - primitives
+
+arrayNum = [1, 1, 2, 3, 4, 1];
+
+arrayNum.indexOf("2");
+
+arrayNum.lastIndexOf(1);
+
+//if element is present in array
+arrayNum.includes(1);
+
+//finding elements - reference
+
+let courses = [
+  { id: 1, name: "a" },
+  { id: 2, name: "b" },
+  { id: 3, name: "c" },
+];
+
+let findCourse = courses.find(function (course) {
+  //callback function
+  return course.name === "a";
+});
+
+const findCourseIndex = courses.findIndex(function (course) {
+  //callback function
+  return course.name === "a";
+});
+
+//ARROW FUNCTIONS - used when passing a function to a method or different function as callback
+
+findCourse = courses.find(() => {
+  return courses.name === "a";
+});
+
+//or
+
+findCourse = courses.find((course) => course.name === "a");
+
+//removing elements
+
+let numbers2 = [1, 2, 3, 4, 5];
+
+//remove from the end
+numbers2.pop();
+
+//remove from beginning
+numbers2.shift();
+
+//remove from middle
+numbers2.splice(2, 2);
+
+//emptying an array
+
+//sol1 - doesn't work if have multiple refs to an array
+numbers2 = [];
+
+//sol2 - best
+numbers2.length = 0;
+
+//sol3
+numbers2.splice(0, numbers2.length);
+
+//sol4 - BAD
+while (numbers2.length > 0) {
+  numbers2.pop();
+}
+
+//combining and slicing arrays
+
+//if primitive - copied by value
+//if reference - copied by reference
+
+const arr1 = [{ id: 1 }];
+const arr2 = [4, 5, 6];
+
+//combining
+const arrCombined = arr1.concat(arr2);
+arr1[0].id = 10;
+
+//slicing
+const sliced = arrCombined.slice();
+
+//ES6 recomended method - spread operartor '...'
+
+const combined = [...arr1, "a", ...arr2, null];
+
+const copy = [...combined];
+
+//iterating an array
+
+for (let number of arr2) console.log(number);
+
+arr2.forEach((number, index) => console.log(index, number)); //optionally callback functino takes an index
+
+//joining arrays
+
+let joined = arr2.join(",");
+
+message = "This is my first message";
+let parts = message.split(" ");
+parts = parts.join("-");
+
+//sorting arrays
+
+let nums = [2, 3, 1];
+nums.sort();
+nums.reverse();
+
+//sorting objects
+courses = [
+  { id: 1, name: "Node" },
+  { id: 2, name: "React" },
+  { id: 3, name: "javaScript" },
+];
+
+courses.sort((a, b) => {
+  const nameA = a.name.toUpperCase();
+  const nameB = b.name.toUpperCase();
+  if (nameA < nameB) return -1;
+  if (nameA > nameB) return 1;
+  return 0;
+});
+
+//testing elements of an array
+
+nums = [1, 2, -1, 3];
+
+let allPositive = nums.every((value) => {
+  return value >= 0;
+});
+
+let atLeastOnePositive = nums.some((value) => {
+  return value >= 0;
+});
+
+console.log(allPositive);
+console.log(atLeastOnePositive);
+
+//filtering an array
+
+nums = [1, -1, 2, 3];
+
+let newFilteredArray = nums.filter((num) => num >= 0); //get num where num is >= 0 and put in new array
+
+console.log(newFilteredArray);
+
+//mapping an array
+
+let numList = newFilteredArray.map((n) => `<li>${n}</li>`);
+
+//let html = `<ul>${numList.join("")}</ul>`
+//console.log(html);
+
+let numObjects = newFilteredArray.map((n) => ({ value: n }));
+
+console.log(numObjects);
+
+//MAP AND FILTER RETURN NEW ARRAY, THEY DO NOT MODIFY THE OG ARRAY
+
+nums = [1, -1, 2, 3];
+
+let chained = nums
+  .filter((n) => n >= 0)
+  .map((n) => ({ value: n }))
+  .filter((obj) => obj.value > 1)
+  .map((obj) => obj.value); //same result, we can chain map and filter
+
+console.log(chained);
+
+//reducing an array
+
+nums = [1, -1, 2, 3];
+
+let summ = 0;
+for (let n of nums) {
+  summ += n;
+}
+
+console.log(summ);
+
+//reduce ana array to single value
+//a = 0, c = 1 => a = 1
+//a = 1, c = -1 => a = 0
+//a = 0, c = 2  => a = 2
+//a = 2, c = 3 => a = 5 <- result
+summ = nums.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+}, 0);
+
+console.log(summ);
+
+//arr exercise 1
+
+function arrayFromRange(min, max) {
+  const output = [];
+  for (let i = min; i <= max; i++) {
+    output.push(i);
+  }
+  return output;
+}
+
+console.log(arrayFromRange(-5, 12));
+
+//arr exercise 2 - include
+
+function includes(array, searchElement) {
+  for (let element of array) {
+    if (element === searchElement) {
+      return true;
+    }
+  }
+  return false;
+}
+
+nums = [1, -1, 2, 3];
+console.log(includes(nums, 4));
+
+//arr exercise 3 - exclude
+
+function except(array, excluded) {
+  const output = [];
+  for (let element of array) {
+    if (!excluded.includes(element)) {
+      output.push(element);
+    }
+  }
+  return output;
+}
+
+console.log(except(nums, [1, -1]));
+
+//arr exercise 4 - move
+
+nums = [1, 2, 3, 4];
+
+function move(array, index, offset) {
+  const position = index + offset;
+  if (position >= array.length || position < 0) {
+    console.error("invalid offset");
+    return;
+  }
+
+  const output = [...array];
+  const element = output.splice(index, 1)[0];
+  output.splice(position, 0, element);
+  return output;
+}
+
+console.log(move(nums, 1, -1));
+
+//arr exercise 5 - get max
+
+nums = [1, 2, 3, 4,99];
+
+function getMax(array) {
+  if (array.length === 0) return undefined;
+
+  return array.reduce((accumulator, current) =>(current > accumulator) ? current : accumulator)
+}
+
+console.log(getMax(nums))
+
+//arr exercise 6
+
+const movies = [
+  {title: "a", year: 2018, rating: 4.5},
+  {title: "b", year: 2018, rating: 4.7},
+  {title: "c", year: 2018, rating: 3},
+  {title: "d", year: 2017, rating: 4.5}
+]
+
+const titles = movies
+  .filter(m => m.year === 2018 && m.rating >= 4)
+  .sort((a,b) => a.rating - b.rating)
+  .reverse()
+  .map(m => m.title)
+  
+console.log(titles)
+
+
+
+
+
+
+
+
+
+
+
+
+
+// FUNCTIONS

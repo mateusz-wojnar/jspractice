@@ -149,13 +149,6 @@ function swap(a, b) {
 
 console.log(swap(a, b));
 
-
-
-
-
-
-
-
 //CONTROL FLOW
 
 //conditions
@@ -343,24 +336,17 @@ console.log(sum(10));
 
 //stars
 
-
-
 function showStars(rowNumber) {
   for (let row = 1; row <= rowNumber; row++) {
     let pattern = "";
     for (let j = 0; j < row; j++) {
-      pattern+="*";
+      pattern += "*";
     }
     console.log(pattern);
   }
 }
 
 showStars(5);
-
-
-
-
-
 
 // OBJECTS
 //oop
@@ -372,11 +358,198 @@ const circle = {
     y: 1,
   },
   isVisible: true,
-  draw: function() {  //METHOD
-    console.log("x+y")
-  }
-}
+  draw: function () {
+    //METHOD
+    console.log("x+y");
+  },
+};
 
-circle.draw()
+circle.draw();
 
 // factory functions
+
+function createCircle(radius) {
+  return {
+    radius, // = radius: radius,
+
+    draw() {
+      console.log("draw");
+    },
+  };
+}
+
+const circle1 = createCircle(1);
+console.log(circle1);
+
+// constructor functions - PASCAL NOTATION
+
+function Circle(radius) {
+  this.radius = radius;
+  this.draw = function () {
+    console.log("draw");
+  };
+}
+
+const circle2 = new Circle(1);
+console.log(circle2);
+
+//dynamic nature of objects
+
+const circlee = {
+  radius: 1,
+};
+
+circlee.color = "yellow";
+circlee.draw = function () {};
+
+delete circlee.color;
+
+console.log(circlee);
+
+// constructor property
+
+let obj = {}; // let obj = new Object();
+
+console.log(obj.constructor);
+
+//every object has a constructor property that references the function
+//that was used to create a object
+
+//FUNCTIONS ARE OBJECTS
+
+function Circle2(radius) {
+  this.radius = radius;
+  this.draw = function () {
+    console.log("draw");
+  };
+}
+
+const another = new Circle2(2);
+console.log(Circle.name);
+console.log(Circle.constructor);
+
+//call, apply, bind -> assings objects to the "this" keyword
+
+Circle2.call({}, 3); // 'this' references the {}
+Circle2.apply({}, [1, 2, 3]);
+
+//values vs reference types
+//values - Number, String, Boolean, Symbol, undefined, null -> primitves
+//Reference - Object, Function, Array -> objects
+
+//independent, "copied"
+let k = 10;
+let n = k;
+
+k = 20;
+
+console.log(k, n);
+
+//referenced
+k = { value: 10 };
+n = k;
+
+k.value = 10;
+
+console.log(k, n);
+
+number = 10;
+
+function increase(number) {
+  number++; //local, indepented from variable outside the scope
+}
+
+increase(number);
+console.log(number);
+
+obj = { value: 10 };
+
+function increase(obj) {
+  obj.value++; //not independet, references same object
+}
+
+increase(obj);
+console.log(obj);
+
+//enumerating properties of an object
+
+for (let key in circle1) {
+  console.log(key, circle[key]);
+}
+
+//OBJECT IS NOT ITERABLE - cannot use for of but:
+
+for (let key of Object.keys(circle1)) {
+  console.log(key);
+}
+
+for (let entry of Object.entries(circle1)) {
+  console.log(entry);
+}
+
+"color" in circle1 ? console.log("yes") : console.log("no");
+
+//Cloning objects
+
+// OLD
+// const cloneCircle = {}
+
+// for (let key in circle1) {
+//   cloneCircle[key] = circle1[key]
+// }
+
+const cloneCircle = Object.assign(
+  {
+    //assing copies properties from one or more sources (objects)
+    color: "yellow",
+  },
+  circle1
+);
+
+const cloneCircle2 = { ...circle1 }; // ... - spread operator - gets all properties and methos of an object
+
+console.log(cloneCircle);
+console.log(cloneCircle2);
+
+//javascript has GARBAGE COLLECTOR, do not worry about memory allocation
+
+//string object
+
+//String primitve
+let message2 = "This is a message";
+
+//string object
+const stringObj = new String("hi");
+
+console.log(typeof message2);
+console.log(typeof stringObj);
+
+console.log(message2.length);
+console.log(message2[2]);
+console.log(message2.includes("This"));
+
+//template literals - `` - backtick
+
+message2 = `This is my
+'first' message ${stringObj}`;
+
+console.log(message2);
+
+//date object
+
+const now = new Date();
+const date1 = new Date("May 11 2018 09:00");
+const date2 = new Date(2018, 0, 11, 9, 0);
+
+console.log(now.getFullYear);
+console.log(date2);
+
+
+
+
+
+
+
+
+
+// ARRAYS

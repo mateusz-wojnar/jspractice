@@ -810,43 +810,302 @@ console.log(move(nums, 1, -1));
 
 //arr exercise 5 - get max
 
-nums = [1, 2, 3, 4,99];
+nums = [1, 2, 3, 4, 99];
 
 function getMax(array) {
   if (array.length === 0) return undefined;
 
-  return array.reduce((accumulator, current) =>(current > accumulator) ? current : accumulator)
+  return array.reduce((accumulator, current) =>
+    current > accumulator ? current : accumulator
+  );
 }
 
-console.log(getMax(nums))
+console.log(getMax(nums));
 
 //arr exercise 6
 
 const movies = [
-  {title: "a", year: 2018, rating: 4.5},
-  {title: "b", year: 2018, rating: 4.7},
-  {title: "c", year: 2018, rating: 3},
-  {title: "d", year: 2017, rating: 4.5}
-]
+  { title: "a", year: 2018, rating: 4.5 },
+  { title: "b", year: 2018, rating: 4.7 },
+  { title: "c", year: 2018, rating: 3 },
+  { title: "d", year: 2017, rating: 4.5 },
+];
 
 const titles = movies
-  .filter(m => m.year === 2018 && m.rating >= 4)
-  .sort((a,b) => a.rating - b.rating)
+  .filter((m) => m.year === 2018 && m.rating >= 4)
+  .sort((a, b) => a.rating - b.rating)
   .reverse()
-  .map(m => m.title)
-  
-console.log(titles)
+  .map((m) => m.title);
 
-
-
-
-
-
-
-
-
-
-
-
+console.log(titles);
 
 // FUNCTIONS
+
+//function declaration vs expressions
+
+//declaration
+function walk() {
+  console.log("walk");
+}
+
+// anonymous funcs expression
+
+let run = function () {
+  console.log("run");
+};
+
+//named func expression
+// run = function walk() {
+//   console.log('run')
+// };
+
+let go = run;
+
+run();
+go();
+
+//HOISTING - moves declarations to the top of the scope
+
+//declarated func can be hoisted - called before declaration ->
+
+walkHoist();
+
+function walkHoist() {
+  console.log("walk");
+}
+
+//func expression cannot be called before delcaration
+
+//runHoist() - referenceError - cannot access
+
+const runHoist = function () {
+  console.log("run");
+};
+
+//arguments
+
+function sum() {
+  let total = 0;
+  for (let value of arguments) total += value;
+
+  return total;
+}
+
+console.log(sum(1, 23, 4, 5, 6));
+
+//rest operator '...' - same as spread but with
+//a parameter of function its called rest operator
+
+function sum(discount, ...prices) {
+  const total = prices.reduce((a, b) => a + b, 0);
+  return total * (1 - discount);
+}
+
+console.log(sum(0.1, 20, 30));
+
+//default parameters
+
+function interest1(principal, rate = 3.5, years = 5) {
+  // rate = rate || 3.5; -> old way
+  // years = years || 5; -> old way
+
+  return ((principal * rate) / 100) * years;
+}
+
+console.log(interest1(10000));
+
+function interest(principal, rate = 3.5, years) {
+  // rate = rate || 3.5; -> old way
+  // years = years || 5; -> old way
+
+  return ((principal * rate) / 100) * years;
+}
+
+console.log(interest(10000, undefined, 5));
+
+//getters and setters
+
+person = {
+  firstName: "Mati",
+  lastName: "Wojnar",
+  get fullName() {
+    return `${person.firstName} ${person.lastName}`;
+  },
+  set fullName(value) {
+    const parts = value.split(" ");
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  },
+};
+
+//getters - acces properties
+//setters - change/mutate properties
+
+person.fullName = "Kasia Chucher";
+
+console.log(person);
+
+//error handling
+
+person = {
+  firstName: "Mati",
+  lastName: "Wojnar",
+  set fullName(value) {
+    if (typeof value !== "string") {
+      throw new Error("Value is not a string");
+    }
+
+    const parts = value.split(" ");
+    if (parts.length !== 2) {
+      throw new Error("Enter first and last name");
+    }
+
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  },
+};
+
+try {
+  person.fullName = "null nullok";
+} catch (e) {
+  console.log(e);
+}
+
+//scope - global and local
+// local variables are more important than global variables
+
+//let vs var
+
+//var -> function scoped
+//let, const -> block-scoped
+
+function start() {
+  for (var uu = 0; uu < 5; uu++) console.log(uu);
+  console.log(uu);
+}
+
+start();
+
+var kolor = "red";
+console.log(window.kolor); // -> red
+
+let kkolor = "blue";
+console.log(window.kkolor); // -> undefined
+
+//avoid using var, creates problems, creates variables that are function scoped
+
+//this keyword - REFERENCES THE OBJECT
+//THAT IS EXECUTING THE CURRENT FUNCTION
+
+//METHOD (FUNCTION THAT IS A PART OF FUNCTION) -> THIS REFERENCES OBJECT ITSELF
+//FUNCTION (NOT PART OF OBJECT) - > THIS REFERENCES GLOBAL (WINDOW, GLOBAL)
+
+let video = {
+  title: "a",
+  play() {
+    console.log(this);
+  },
+};
+
+video.stop = function () {
+  console.log(this);
+};
+
+video.play(); // -> object {title: a, play: function}
+video.stop(); // -> object {title: a, play: function}
+
+//
+
+function playVideo() {
+  console.log(this);
+}
+
+playVideo(); // -> window object
+
+//
+
+function Video(title) {
+  this.title = title;
+  console.log(this);
+}
+
+//because 'new' creates a empty object, this keyword references the object, not window
+const v = new Video("a"); // -> object Video {title: 'a'}
+
+//THIS GETS THE CURRENT OBJECT
+
+video = {
+  title: "a",
+  tags: ["a", "b", "c"],
+  showTags() {
+    this.tags.forEach(function (tag) {
+      console.log(this.title, tag);
+    }, this); // withut thisArg, the this in line above would reference window, becauce function(tag) is normal function thus this references window
+  },
+};
+
+video.showTags(); // -> a b c
+
+//CHANGING THIS
+
+//do not use this approach, but it exists and works
+video = {
+  title: "a",
+  tags: ["a", "b", "c"],
+  showTags() {
+    const self = this;
+    this.tags.forEach(function (tag) {
+      console.log(self.title, tag);
+    });
+  },
+};
+
+video.showTags();
+
+function playVideo2(a, b) {
+  console.log(this);
+}
+
+playVideo.call({ name: "Mati" }); // -> object {name: 'Mati'}
+playVideo(); // -> window object
+
+playVideo.apply({ name: "Mati" }); // -> object {name: 'Mati'}
+
+//diffrence between call and apply - only in passing the arguments
+playVideo.call({ name: "Mati" }, 1, 2); // -> object {name: 'Mati'}
+
+playVideo.apply({ name: "Mati" }, [1, 2]);
+
+// bind does not call the function, it creates new function and points this to the passed object ALWAYS
+playVideo.bind({ name: "Mati" })(); // object {name: 'Mati'}
+
+//call apply and bind - set the 'this' argument for given function
+
+// second solution, still not the best
+video = {
+  title: "a",
+  tags: ["a", "b", "c"],
+  showTags() {
+    this.tags.forEach(
+      function (tag) {
+        console.log(this.title, tag);
+      }.bind(this)
+    );
+  },
+};
+
+video.showTags();
+
+// third solution - best since ES6 ES2015
+video = {
+  title: "a",
+  tags: ["a", "b", "c"],
+  showTags() {
+    this.tags.forEach((tag) => {
+      //using arrow function here allow this to still reference the current object
+      console.log(this.title, tag);
+    });
+  },
+};
+
+video.showTags();

@@ -1109,3 +1109,27 @@ video = {
 };
 
 video.showTags();
+
+
+//exercise 1 - sum of arguments
+
+function sumArgs(...items) {
+  if (items.length == 1 && Array.isArray(items[0]))
+    items = [...items[0]];
+
+  return items.reduce((a,b) => a + b)
+}
+
+console.log(sumArgs(1,2,34))
+console.log(sumArgs([1,2,3,4]))
+
+//exercise 2 - circle area
+
+const circleObj = {
+  radius: 2,
+  get area() {
+    return  Math.PI * Math.pow(this.radius,2)
+  }
+}
+
+console.log(circleObj.area)

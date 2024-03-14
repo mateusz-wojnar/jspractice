@@ -987,10 +987,10 @@ function start() {
 start();
 
 var kolor = "red";
-console.log(window.kolor); // -> red
+//console.log(window.kolor); // -> red
 
 let kkolor = "blue";
-console.log(window.kkolor); // -> undefined
+//console.log(window.kkolor); // -> undefined
 
 //avoid using var, creates problems, creates variables that are function scoped
 
